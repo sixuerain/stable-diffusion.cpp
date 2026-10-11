@@ -1,0 +1,13 @@
+# systemd user service: ~/.config/systemd/user/sd-server.service
+# systemctl --user enable --now sd-server
+[Unit]
+Description=stable-diffusion.cpp server (Qwen-Image-2.1 GGUF)
+After=network.target
+
+[Service]
+ExecStart=%h/sd-src/stable-diffusion.cpp/build/bin/sd-server --diffusion-model %h/sd-data/models/qwen-image-2.1-Q4_K_M.gguf --vae %h/sd-data/models/vae/qwen_image_2.1_vae_bf16.safetensors --llm %h/sd-data/models/Qwen3-VL-8B-Instruct-UD-Q4_K_XL.gguf --listen-ip 127.0.0.1 --listen-port 8189
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
